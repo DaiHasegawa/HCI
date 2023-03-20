@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Fitts' Law Experiment</title>
+	<style>
+		#target {
+			position: absolute;
+			width: 50px;
+			height: 50px;
+			background-color: blue;
+			border-radius: 50%;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			cursor: pointer;
+			transition: background-color 0.2s;
+		}
+		
+		#container {
+			height: 100vh;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+	</style>
+</head>
+<body>
+	<div id="container">
+		<div id="target"></div>
+	</div>
+	
+	<script>
+		// グローバル変数
+		var targetSize = 50; // ターゲットのサイズ
+		var distance = 0; // ターゲットまでの距離
+		var startTime = 0; // 開始時間
+		var endTime = 0; // 終了時間
+		
+		// ターゲットの座標をランダムに決定
+		var target = document.getElementById("target");
+		target.style.top = Math.random() * (window.innerHeight - targetSize) + "px";
+		target.style.left = Math.random() * (window.innerWidth - targetSize) + "px";
+		
+		// ターゲットにマウスが乗ったときの処理
+		target.addEventListener("mouseenter", function() {
+			// ターゲットまでの距離を計算
+			distance = Math.sqrt(Math.pow(parseFloat(target.style.top) - window.innerHeight/2, 2) + Math.pow(parseFloat(target.style.left) - window.innerWidth/2, 2));
+			
+			// 開始時間を記録
+			startTime = performance.now();
+			
+			// ターゲットの色を変更
+			target.style.backgroundColor = "red";
+		});
+		
+		// ターゲットからマウスが離れたときの処理
+		target.addEventListener("mouseleave", function() {
+			// 終了時間を記録
+			endTime = performance.now();
+			
+			// ターゲットの色を元に戻す
+			target.style.backgroundColor = "blue";
+			
+			// 反応時間を計算
+			var reactionTime = endTime - startTime;
+			
+			// ログに結果を出力
+			console.log("Distance: " + distance + ", Reaction Time: " + reactionTime);
+			
+			// 新しいターゲットの座標をランダムに決定
+			target.style.top = Math.random() * (window.innerHeight - targetSize) + "px";
+			target.style.left = Math.random() * (window.innerWidth - targetSize) + "px";
+		});
+	</script>
+</body>
+</html>

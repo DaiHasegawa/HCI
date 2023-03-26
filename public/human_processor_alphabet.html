@@ -40,7 +40,7 @@
 </div>
 
 <script>
-	var names = ["CJPL", "YTFR", "GQSS", "PLGH", "BMMC", "EAZQ", "DVGR", "LPTF", "SDFG"]; // 名前のリスト
+	var names = ["C J P L", "C J F R", "S H P L", "S H G H", "B M T C", "B M Z Q", "C J G R", "S H T F", "B M F G"]; // 名前のリスト
 	var name_to_match = names[Math.floor(Math.random() * names.length)] // 覚える名前
 	var name = ""; // 表示する名前
 	var startTime = 0; // 開始時間
@@ -67,22 +67,30 @@
 		nameElement.textContent = "+";
 		matchButton.disabled = true;
 
-
 		// 名前を表示
 		setTimeout(showName, 5000);
 	}
 
 	// 名前を表示する関数
 	function showName() {
-		// 新しい名前を提示
-		name = names[Math.floor(Math.random() * names.length)];
-		nameElement.textContent = name;
+		// 表示する名前がなければ終了
+		if　(names.length == 0) {
+			clearInterval(interval_id);
+			instructionElement.textContent = "提示する名前がありません"
+		} else {
+			// 新しい名前を提示
+			name = names[Math.floor(Math.random() * names.length)];
+			nameElement.textContent = name;
 
-		// 開始時間を記録
-		startTime = Date.now();
+			// 開始時間を記録
+			startTime = Date.now();
 
-		// ボタンを有効化
-		matchButton.disabled = false;
+			// ボタンを有効化
+			matchButton.disabled = false;
+
+			// 一度提示した名前は削除
+			names = names.filter(element => !(element == name));
+		}
 	}
 
 	// ボタンがクリックされたときの処理

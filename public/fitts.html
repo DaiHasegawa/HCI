@@ -39,16 +39,20 @@
 
 	let start, end;
 
-	circle.addEventListener("mouseout", () => {
-		start = new Date();
-	});
-
-	circle.addEventListener("touchmove", () => {
-		start = new Date();
-	});
-
 	circle.addEventListener("click", () => {
-		circle.remove();
+		rectangle.style.width = Math.floor(Math.random() * 200 + 10) + "px";
+		rectangle.style.height = Math.floor(Math.random() * 200 + 50) + "px";
+		rectangle.style.left = Math.floor(Math.random() * 500 + 100) + "px";
+		rectangle.style.top = "50px";
+		start = new Date();
+	});
+
+	circle.addEventListener("touchend", () => {
+		rectangle.style.width = Math.floor(Math.random() * 200 + 10) + "px";
+		rectangle.style.height = Math.floor(Math.random() * 200 + 50) + "px";
+		rectangle.style.left = Math.floor(Math.random() * 500 + 100) + "px";
+		rectangle.style.top = "50px";
+		start = new Date();
 	});
 
 	rectangle.addEventListener("dragover", (event) => {
@@ -59,42 +63,28 @@
 		end = new Date();
 		const timeDiff = end - start;
 
-		const distance = Math.sqrt(Math.pow(event.clientX - rectangle.offsetLeft - rectangle.offsetWidth / 2, 2) + Math.pow(event.clientY - rectangle.offsetTop - rectangle.offsetHeight / 2, 2));
-		const size = circle.offsetWidth;
+		const distance = Math.sqrt(Math.pow((circle.offsetLeft - circle.offsetWidth/2) - (rectangle.offsetLeft - rectangle.offsetWidth / 2), 2) + Math.pow((circle.offsetTop + circle.offsetHeight/2) - (rectangle.offsetTop + rectangle.offsetHeight / 2), 2));
+		const size = rectangle.offsetWidth;
 		const a = 0.1;
 		const b = 0.2;
 
 		const fitzTime = a + b * Math.log2(distance / size + 1) * 1000;
 
-		display.textContent = "移動にかかった時間は " + timeDiff + " ミリ秒です。フィッツの法則によると、移動にかかる理論値は " + fitzTime.toFixed(0) + " ミリ秒です。";
+		display.textContent = "移動にかかった時間は " + timeDiff + " ミリ秒です。矩形の幅は " + size + " pxで、距離は " + distance.toFixed(2) + " pxでした。フィッツの法則によると、移動にかかる理論値は " + fitzTime.toFixed(0) + " ミリ秒です。";
 	});
 
 	rectangle.addEventListener("touchstart", () => {
 		end = new Date();
 		const timeDiff = end - start;
 
-		const distance = Math.sqrt(Math.pow(event.clientX - rectangle.offsetLeft - rectangle.offsetWidth / 2, 2) + Math.pow(event.clientY - rectangle.offsetTop - rectangle.offsetHeight / 2, 2));
-		const size = circle.offsetWidth;
+		const distance = Math.sqrt(Math.pow((circle.offsetLeft - circle.offsetWidth/2) - (rectangle.offsetLeft - rectangle.offsetWidth / 2), 2) + Math.pow((circle.offsetTop + circle.offsetHeight/2) - (rectangle.offsetTop + rectangle.offsetHeight / 2), 2));
+		const size = rectangle.offsetWidth;
 		const a = 0.1;
 		const b = 0.2;
 
 		const fitzTime = a + b * Math.log2(distance / size + 1) * 1000;
 
-		display.textContent = "移動にかかった時間は " + timeDiff + " ミリ秒です。フィッツの法則によると、移動にかかる理論値は " + fitzTime.toFixed(0) + " ミリ秒です。";
-	});
-
-	rectangle.addEventListener("mouseout", (event) => {
-		rectangle.style.width = Math.floor(Math.random() * 200 + 50) + "px";
-		rectangle.style.height = Math.floor(Math.random() * 200 + 50) + "px";
-		rectangle.style.left = Math.floor(Math.random() * 500) + "px";
-		rectangle.style.top = Math.floor(Math.random() * 300) + "px";
-	});
-
-	rectangle.addEventListener("touchend", (event) => {
-		rectangle.style.width = Math.floor(Math.random() * 200 + 50) + "px";
-		rectangle.style.height = Math.floor(Math.random() * 200 + 50) + "px";
-		rectangle.style.left = Math.floor(Math.random() * 500) + "px";
-		rectangle.style.top = Math.floor(Math.random() * 300) + "px";
+		display.textContent = "移動にかかった時間は " + timeDiff + " ミリ秒です。矩形の幅は " + size + " pxで、距離は " + distance.toFixed(2) + " pxでした。フィッツの法則によると、移動にかかる理論値は " + fitzTime.toFixed(0) + " ミリ秒です。";
 	});
 
 
